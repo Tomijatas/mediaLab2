@@ -41,7 +41,22 @@
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */
+/* 0 */function loadObject() {
+  let el = document.querySelector('a-pointcloud');
+
+  if (currentModel === 0) {
+    el.setAttribute('src', 'url(Sphere.ply)');
+    el.setAttribute('position', '1 1 -2');
+    el.setAttribute('scale', '0.3 0.3 0.3');
+    currentModel = 1;
+  } else {
+    el.setAttribute('src', 'url(sculpt.ply)');
+    el.setAttribute('position', '0 0.08 -2.5');
+    el.setAttribute('scale', '0.1 0.1 0.1');
+    currentModel = 0;
+  }
+}
+
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
