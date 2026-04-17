@@ -1,39 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Lab2 - VR application</title>
-    <meta name="description" content="Basic example for Point Cloud component."></meta>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="js/aframe-pointcloud-component.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-assets>
-        <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
-        <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg">
-      </a-assets>
 
-      <a-plane src="#groundTexture" rotation="-90 0 0" height="100" width="100"></a-plane>
-      <a-light type="ambient" color="#445451"></a-light>
-      <a-light type="point" intensity="2" position="2 4 4"></a-light>
-      <a-sky height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"></a-sky>
-      <a-entity laser-controls line="color: red; opacity: 0.75"></a-entity>
-      <a-pointcloud 
-        scale="0.1 0.1 0.1" 
-        position="0 0.08 -2.5" 
-        rotation="-90 45 0" 
-        src="url(sculpt.ply)" 
-        size="0.01">
-      </a-pointcloud>
-    </a-scene>
+<head>
+  <meta charset="utf-8">
+  <title>Lab2 - VR application</title>
+  <meta name="description" content="Basic example for Point Cloud component.">
+  </meta>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="js/aframe-pointcloud-component.js"></script>
+  <script>
+    let currentModel = 0;
 
-    <div style="position: fixed; top: 10px; left: 10px; z-index: 999;">
-      <button onclick="rotate()">Rotate</button>
-      <button onclick="move()">Move</button>
-      <button onclick="zoom()">Zoom</button>
-      <button onclick="loadObject()">Load object</button>
-    </div>
+    // 🔄 Rotate
+    function rotate() {
+      let el = document.querySelector('#model');
+      let rot = el.getAttribute('rotation');
 
-  </body>
+      el.setAttribute('rotation', {
+        x: rot.x,
+        y: rot.y + 20,
+        z: rot.z
+      });
+    }
+
+    // 📦 Move
+    function move() {
+      let el = document.querySelector('#model');
+      let pos = el.getAttribute('position');
+
+      el.setAttribute('position', {
+        x: pos.x + 0.3,
+        y: pos.y,
+        z: pos.z
+      });
+    }
+
+    // 🔍 Zoom
+    function zoom() {
+      let el = document.querySelector('#model');
+      let scale = el.getAttribute('scale');
+
+      el.setAttribute('scale', {
+        x: scale.x + 0.05,
+        y: scale.y + 0.05,
+        z: scale.z + 0.05
+      });
+    }
+
+    // 🔁 Load object (bonus)
+    function loadObject() {
+      let el = document.querySelector('#model');
+
+      if (currentModel === 0) {
+        el.setAttribute('src', 'url(Sphere.ply)');
+        currentModel = 1;
+      } else {
+        el.setAttribute('src', 'url(sculpt.ply)');
+        currentModel = 0;
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <a-scene>
+    <a-assets>
+      <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
+      <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg">
+    </a-assets>
+
+    <a-plane src="#groundTexture" rotation="-90 0 0" height="100" width="100"></a-plane>
+    <a-light type="ambient" color="#445451"></a-light>
+    <a-light type="point" intensity="2" position="2 4 4"></a-light>
+    <a-sky color="#0f172a"></a-sky>
+    <a-entity laser-controls line="color: red; opacity: 0.75"></a-entity>
+    <a-pointcloud id="model" scale="0.1 0.1 0.1" position="0 0.08 -2.5" rotation="-90 45 0" src="url(sculpt.ply)"
+      size="0.01">
+    </a-pointcloud>
+    <a-box id="model" position="0 1 -3" rotation="0 45 0" color="#4f46e5">
+    </a-box>
+  </a-scene>
+
+  <div style="position: fixed; top: 10px; left: 10px; z-index: 999;">
+    <button onclick="rotate()">Rotate</button>
+    <button onclick="move()">Move</button>
+    <button onclick="zoom()">Zoom</button>
+    <button onclick="loadObject()">Load object</button>
+  </div>
+
+</body>
+
 </html>
