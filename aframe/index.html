@@ -35,8 +35,7 @@
       });
     }
 
-    // 🔍 Zoom
-    function zoom() {
+    function zoomIn() {
       let el = document.querySelector('#model');
       let scale = el.getAttribute('scale');
 
@@ -44,6 +43,17 @@
         x: scale.x + 0.05,
         y: scale.y + 0.05,
         z: scale.z + 0.05
+      });
+    }
+    // 🔍 Zoom Out
+    function zoomOut() {
+      let el = document.querySelector('#model');
+      let scale = el.getAttribute('scale');
+
+      el.setAttribute('scale', {
+        x: scale.x - 0.05,
+        y: scale.y - 0.05,
+        z: scale.z - 0.05
       });
     }
 
@@ -84,7 +94,8 @@
   <div style="position: fixed; top: 10px; left: 10px; z-index: 999;">
     <button onclick="rotate()">Rotate</button>
     <button onclick="move()">Move</button>
-    <button onclick="zoom()">Zoom</button>
+    <button onclick="zoomIn()">Zoom In</button>
+    <button onclick="zoomOut()">Zoom Out</button>
     <button onclick="loadObject()">Load object</button>
   </div>
 
